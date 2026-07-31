@@ -1,11 +1,21 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Sidebar from "./components/SideBar"
 import CoursesAdminPage from "./pages/PageAdministracionMaterias"
 
 function App() {
 
-  return(
-    <div>
-      <CoursesAdminPage/>
-    </div>
+  return (
+
+    <BrowserRouter>
+      <Sidebar />
+      <div className="app-content">
+        <Routes>
+          <Route path="/materias" element={<CoursesAdminPage></CoursesAdminPage>}></Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
+
+
   )
 }
 
