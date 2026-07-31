@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "../config/apiconfig";
 import CardMaterias from "../components/ListarCardsMaterias";
+import { showToast } from "../utils/toats";
+import Toast from "../components/Toast";
 
 
 // Una sola constante, un solo criterio: SIEMPRE incluye "/api" y NUNCA barra al final
 const API_URL = `${API_BASE_URL}/api`;
 
 export default function CoursesAdminPage() {
+    const [toast, setToast] = useState({
+        message: "",
+        type: "success"
+    });
     const emptyForm = {
         name: "",
         day: "",
@@ -47,6 +53,7 @@ export default function CoursesAdminPage() {
                 throw new Error(data.message);
             }
 
+            showToast(setToast, "Materia registrada correctamente", "success");
             setForm(emptyForm); // limpia el formulario
             loadCourses();      // recarga la lista para ver la nueva materia
 
@@ -91,7 +98,7 @@ export default function CoursesAdminPage() {
                 const data = await res.json()
                 throw new Error(data.message);
             }
-
+            showToast(setToast, "Materia eliminada con exito", "success");
             // Opción 1: recargar todo desde el backend
             loadCourses();
         } catch (err) {
@@ -129,7 +136,7 @@ export default function CoursesAdminPage() {
 
                             <label className="field">
                                 <span className="field-label">Día</span>
-                                <select className="select" name="day" value={form.day} onChange={handleChange} required> 
+                                <select className="select" name="day" value={form.day} onChange={handleChange} required>
                                     <option value="" disabled>Seleccione un día</option>
                                     <option value="Lunes">Lunes</option>
                                     <option value="Martes">Martes</option>
@@ -234,6 +241,11 @@ export default function CoursesAdminPage() {
                     </div>
                 </section>
             </div>
+
+            <Toast
+                message={toast.message}
+                type={toast.type}
+            />
         </div>
     );
 }

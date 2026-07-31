@@ -660,3 +660,69 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+
+
+
+/*====================================toast*/
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    max-width: 280px;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+
+    animation: toastIn .3s ease;
+
+    white-space: nowrap;
+}
+
+.toast-success {
+    background: #16a34a;
+}
+
+.toast-error {
+    background: #dc2626;
+}
+
+.toast-warning {
+    background: #f59e0b;
+}
+
+.toast-info {
+    background: #2563eb;
+}
+
+.toast-icon {
+    font-size: 14px;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
