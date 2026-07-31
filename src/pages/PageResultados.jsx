@@ -1,4 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../config/apiconfig";
+
 
 // Traduce cada campo de configuración a su letra lógica y su descripción,
 // para armar la ecuación P ∧ Q ∧ R ∧ ... dinámicamente (Paso 18)
@@ -12,12 +15,35 @@ const RULE_DEFINITIONS = [
     { letter: "P", label: "Cumple los prerrequisitos" },
 ];
 
+
 export default function ResultsPage() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const result = location.state?.result;
     const configuration = location.state?.configuration;
+
+
+    const [allCourses, setAllCourses] = useState([]);
+    const [selectedSchedule, setSelectedSchedule] = useState(null); // el horario que se está viendo en detalle
+
+    useEffect(() => {
+        const loadCourses = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/courses`);
+                const data = await res.json();
+                setAllCourses(data);
+            } catch (err) {
+                console.error("Error al cargar materias para el detalle:", err);
+            }
+        };
+        loadCourses();
+    }, []);
+
+    // Busca los datos completos de una materia por nombre
+    const getCourseDetails = (name) => {
+        return allCourses.find((c) => c.name === name);
+    };
 
     // Si alguien llega a /resultados sin haber generado nada antes
     // (ej: recargó la página), no hay "state" — lo manejamos con cuidado.
@@ -175,6 +201,16 @@ export default function ResultsPage() {
                                                 </li>
                                             ))}
                                         </ul>
+                                        <div className="course-card-actions">
+                                            <button
+                                                type="button"
+                                                className="link-action link-edit"
+                                                onClick={() => setSelectedSchedule({ ...schedule, index: index + 1 })}
+                                            >
+                                                Ver detalle
+                                            </button>
+                                        </div>
+
                                     </div>
                                 ))}
                             </div>
@@ -209,6 +245,15 @@ export default function ResultsPage() {
                                                 <td style={{ color: "var(--danger)" }}>
                                                     {schedule.reasons.join(" · ")}
                                                 </td>
+                                                <td className="cell-actions">
+                                                    <button
+                                                        type="button"
+                                                        className="link-action link-edit"
+                                                        onClick={() => setSelectedSchedule({ ...schedule, index: index + 1 })}
+                                                    >
+                                                        Ver detalle
+                                                    </button>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -222,6 +267,85 @@ export default function ResultsPage() {
                     Generar otro horario
                 </button>
             </div>
+
+            {/* ========================================== */}
+            {/* PANTALLA 4: DETALLE DE HORARIO (modal)      */}
+            {/* ========================================== */}
+            {selectedSchedule && (
+                <div className="modal-backdrop" onClick={() => setSelectedSchedule(null)}>
+                    <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2 className="panel-title">Detalle del horario #{selectedSchedule.index}</h2>
+                            <button
+                                className="link-action link-delete"
+                                onClick={() => setSelectedSchedule(null)}
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+
+                        <div className="prereq-item" style={{ marginBottom: "16px" }}>
+                            <span>Estado</span>
+                            <strong className={selectedSchedule.valid ? "badge badge-baja" : "badge"} style={{ color: selectedSchedule.valid ? "#3ddc84" : "var(--danger)" }}>
+                                {selectedSchedule.valid ? "VÁLIDO" : "DESCARTADO"}
+                            </strong>
+                        </div>
+
+                        {!selectedSchedule.valid && selectedSchedule.reasons.length > 0 && (
+                            <div className="alert-error" style={{ marginBottom: "20px" }}>
+                                {selectedSchedule.reasons.join(" · ")}
+                            </div>
+                        )}
+
+                        <div className="table-wrap">
+                            <table className="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Materia</th>
+                                        <th>Día</th>
+                                        <th>Hora</th>
+                                        <th>Modalidad</th>
+                                        <th>Dificultad</th>
+                                        <th>Créditos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {selectedSchedule.courses.map((name) => {
+                                        const details = getCourseDetails(name);
+                                        return (
+                                            <tr key={name}>
+                                                <td className="cell-strong">{name}</td>
+                                                <td className="cell-mono">{details?.day ?? "—"}</td>
+                                                <td className="cell-mono">
+                                                    {details
+                                                        ? `${details.start_time.slice(11, 16)} - ${details.end_time.slice(11, 16)}`
+                                                        : "—"}
+                                                </td>
+                                                <td>
+                                                    <span className={`badge ${details?.modality === "Virtual" ? "badge-virtual" : "badge-presencial"}`}>
+                                                        {details?.modality ?? "—"}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span className={`badge badge-${details?.difficulty?.toLowerCase() ?? "baja"}`}>
+                                                        {details?.difficulty ?? "—"}
+                                                    </span>
+                                                </td>
+                                                <td className="cell-mono">{details?.credits ?? "—"}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="prereq-item" style={{ marginTop: "16px" }}>
+                            <span>Total de créditos</span>
+                            <strong className="cell-mono">{selectedSchedule.totalCredits}</strong>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
