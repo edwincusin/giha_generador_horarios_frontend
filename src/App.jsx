@@ -1,11 +1,11 @@
-
+import CoursesAdminPage from "./pages/PageAdministracionMaterias"
 
 function App() {
 
   return(
-    <>
-      <h1>hola mundo</h1>
-    </>
+    <div>
+      <CoursesAdminPage/>
+    </div>
   )
 }
 
