@@ -1,70 +1,662 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap");
+
+/* ==========================================================================================================
+   INDEX.CSS — Tema futurista / metálico (inspirado en Transformers)
+   Paleta: gunmetal, cromo, acentos ámbar (hazard) y cian (HUD)
+   ========================================================================================================== */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Metales */
+  --gunmetal-900: #0a0c0f;
+  --gunmetal-800: #121519;
+  --gunmetal-700: #1a1e24;
+  --gunmetal-600: #23282f;
+  --steel-500: #3a4048;
+  --steel-400: #565e69;
+  --chrome-300: #8c95a1;
+  --chrome-200: #b7bfc9;
+  --chrome-100: #dfe3e8;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Acentos */
+  --accent: #ff7a1a;
+  --accent-hover: #ff934a;
+  --accent-glow: rgba(255, 122, 26, 0.35);
+  --cyan: #4fd8ff;
+  --cyan-glow: rgba(79, 216, 255, 0.3);
+  --danger: #ff4d4d;
+  --danger-bg: rgba(255, 77, 77, 0.1);
+  --danger-border: rgba(255, 77, 77, 0.4);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  /* Semánticas */
+  --bg: var(--gunmetal-900);
+  --surface: var(--gunmetal-800);
+  --surface-raised: var(--gunmetal-700);
+  --border: var(--steel-500);
+  --text: var(--chrome-200);
+  --text-muted: var(--chrome-300);
+  --text-heading: var(--chrome-100);
+
+  --font-display: "Orbitron", sans-serif;
+  --font-body: "Rajdhani", system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, Consolas, monospace;
+
+  color-scheme: dark;
   color: var(--text);
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  font: 17px/1.5 var(--font-body);
+  letter-spacing: 0.2px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background:
+    radial-gradient(circle at 20% -10%, rgba(255, 122, 26, 0.06), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(79, 216, 255, 0.05), transparent 35%),
+    repeating-linear-gradient(
+      135deg,
+      var(--gunmetal-900) 0px,
+      var(--gunmetal-900) 38px,
+      #0d1013 38px,
+      #0d1013 40px
+    );
+  min-height: 100svh;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
+}
+
+/* ==========================================================================================================
+   PÁGINA
+   ========================================================================================================== */
+
+.page {
+  min-height: 100svh;
+  color: var(--text);
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ==========================================================================================================
+   HEADER
+   ========================================================================================================== */
+
+.page-header {
+  position: relative;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  color: var(--text-heading);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.page-subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 10px 0 0;
+}
+
+/* ==========================================================================================================
+   ALERTA / ERROR
+   ========================================================================================================== */
+
+.alert-error {
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-left: 3px solid var(--danger);
+  color: #ffb3b3;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+/* ==========================================================================================================
+   PANELES (secciones tipo "módulo")
+   ========================================================================================================== */
+
+.panel {
+  position: relative;
+  background: linear-gradient(180deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.25), transparent 30%) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.panel-body {
+  padding: 28px;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  margin: 0 0 4px;
+}
+
+.panel-hint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+
+/* ==========================================================================================================
+   FORMULARIO
+   ========================================================================================================== */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.field {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  gap: 6px;
 }
-/*=========================================================================================
-                      ----INICIO ESTILOS GENERALES PROYECTO REACT --------------
-===========================================================================================*/
+
+.field.span-2 {
+  grid-column: span 2;
+}
+
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.input,
+.select {
+  appearance: none;
+  background: var(--gunmetal-900);
+  border: 1px solid var(--border);
+  color: var(--text-heading);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 12px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+  color: var(--steel-400);
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--chrome-300) 50%),
+    linear-gradient(135deg, var(--chrome-300) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 32px;
+}
+
+.form-actions {
+  grid-column: span 4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================================================
+   BOTONES
+   ========================================================================================================== */
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+  color: var(--gunmetal-900);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #ffa25f, var(--accent-hover));
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+  color: var(--text-heading);
+  border-color: var(--chrome-300);
+}
+
+/* ==========================================================================================================
+   TABLA
+   ========================================================================================================== */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table thead {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  text-align: left;
+  font-weight: 500;
+  padding: 12px 20px;
+}
+
+.data-table th:last-child {
+  text-align: right;
+}
+
+.data-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--gunmetal-600);
+  color: var(--text);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cell-strong {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+.cell-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cell-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.link-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0;
+  margin-left: 18px;
+}
+
+.link-edit {
+  color: var(--cyan);
+}
+
+.link-edit:hover {
+  text-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.link-delete {
+  color: var(--danger);
+}
+
+.link-delete:hover {
+  text-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
+}
+
+.empty-state {
+  padding: 8px 28px 28px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ==========================================================================================================
+   BADGES (modalidad / dificultad)
+   ========================================================================================================== */
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+}
+
+.badge-virtual {
+  color: var(--cyan);
+}
+
+.badge-presencial {
+  color: var(--accent);
+}
+
+.badge-alta {
+  color: var(--danger);
+}
+
+.badge-media {
+  color: var(--accent);
+}
+
+.badge-baja {
+  color: var(--chrome-300);
+}
+
+/* ==========================================================================================================
+   PRERREQUISITOS
+   ========================================================================================================== */
+
+.prereq-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.prereq-connector {
+  padding-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.prereq-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prereq-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  background: var(--gunmetal-900);
+  font-size: 13px;
+}
+
+.prereq-item strong {
+  color: var(--text-heading);
+}
+
+.prereq-arrow {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin: 0 6px;
+}
+
+/* ==========================================================================================================
+   TARJETAS DE MATERIA (modo grid)
+   ========================================================================================================== */
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.course-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, var(--gunmetal-700) 0%, var(--gunmetal-900) 65%);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--steel-500);
+  padding: 20px 20px 16px;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  overflow: hidden;
+}
+
+/* franja lateral tipo "indicador de estado" */
+.course-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--steel-500);
+  transition: background 0.18s ease;
+}
+
+.course-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--accent-glow);
+}
+
+.course-card:hover::before {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.course-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--gunmetal-600);
+}
+
+.course-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-heading);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.course-card-id {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--gunmetal-900);
+  background: var(--steel-400);
+  padding: 2px 6px;
+}
+
+.course-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.course-card-meta .cell-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.course-card-meta .cell-mono:first-child::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin-left: 10px;
+  background: var(--steel-400);
+  vertical-align: middle;
+}
+
+.course-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.course-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--gunmetal-600);
+}
+
+.course-card-actions .link-action {
+  margin-left: 0;
+  margin-right: 20px;
+}
+
+.course-card-actions .link-action:last-child {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* ==========================================================================================================
+   RESPONSIVE
+   ========================================================================================================== */
+
+@media (max-width: 860px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .field.span-2 {
+    grid-column: span 2;
+  }
+  .form-actions {
+    grid-column: span 2;
+  }
+  .page-title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 520px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .field.span-2,
+  .form-actions {
+    grid-column: span 1;
+  }
+  .container {
+    padding: 32px 16px 60px;
+  }
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+}
