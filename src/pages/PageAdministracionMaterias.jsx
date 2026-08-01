@@ -254,6 +254,7 @@ export default function CoursesAdminPage() {
     return (
         <div className="page">
             <div className="container">
+                
                 <header className="page-header">
                     <h1 className="page-title">Administración de materias</h1>
 
@@ -265,6 +266,7 @@ export default function CoursesAdminPage() {
 
                 <section className="panel">
                     <div className="panel-body">
+                        <span className="eyebrow">Paso 1</span>
                         <h2 className="panel-title">{editingId ? `Editar materia ID: ${editingId}` : "Registrar nueva materia"}</h2>
 
                         <form onSubmit={handleSubmit} className="form-grid">
@@ -369,10 +371,12 @@ export default function CoursesAdminPage() {
 
 
 
-
+                
                 {/* SECCIÓN: ASIGNAR PRERREQUISITOS ====================================================================================*/}
                 <section className="panel">
+                    
                     <div className="panel-body">
+                        <span className="eyebrow">Paso 2</span>
                         <h2 className="panel-title">Asignar prerrequisitos</h2>
 
                         <div className="form-grid">

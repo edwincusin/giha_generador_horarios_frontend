@@ -215,7 +215,7 @@ export default function ConfigurationPage() {
                                 {courses.map((course) => (
                                     <label key={course.id} className="prereq-item" style={{ cursor: "pointer" }}>
                                         <span>
-                                            <strong>{course.name}</strong> — {course.day}
+                                            <strong>{course.name}</strong> — {course.day}  {course.start_time.slice(11, 16)}–{course.end_time.slice(11, 16)}
                                         </span>
                                         <input
                                             type="checkbox"
@@ -241,7 +241,7 @@ export default function ConfigurationPage() {
                                 {courses.map((course) => (
                                     <label key={course.id} className="prereq-item" style={{ cursor: "pointer" }}>
                                         <span>
-                                            <strong>{course.name}</strong> — {course.day}
+                                            <strong>{course.name}</strong>
                                         </span>
                                         <input
                                             type="checkbox"

@@ -53,23 +53,70 @@
   box-sizing: border-box;
 }
 
+
+
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 20% -10%, rgba(255, 122, 26, 0.06), transparent 40%),
-    radial-gradient(circle at 100% 0%, rgba(79, 216, 255, 0.05), transparent 35%),
-    repeating-linear-gradient(
-      135deg,
-      var(--gunmetal-900) 0px,
-      var(--gunmetal-900) 38px,
-      #0d1013 38px,
-      #0d1013 40px
-    );
   min-height: 100svh;
+  background: linear-gradient(
+    180deg,
+    var(--gunmetal-700) 0%,
+    var(--gunmetal-800) 35%,
+    var(--gunmetal-900) 100%
+  );
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Partículas flotando suavemente */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(circle, rgba(255,122,26,0.8) 2px, transparent 3px),
+    radial-gradient(circle, rgba(79,216,255,0.7) 2px, transparent 3px),
+    radial-gradient(circle, rgba(255,255,255,0.4) 1.5px, transparent 2.5px);
+
+  background-size:
+    120px 120px,
+    180px 180px,
+    90px 90px;
+
+  opacity: 0.7;
+
+  animation: floatingParticles 40s ease-in-out infinite;
 }
 
 #root {
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
+}
+
+@keyframes floatingParticles {
+  0% {
+    transform: translateY(-5%) translateX(0);
+  }
+
+  25% {
+    transform: translateY(20%) translateX(15px);
+  }
+
+  50% {
+    transform: translateY(45%) translateX(-10px);
+  }
+
+  75% {
+    transform: translateY(70%) translateX(20px);
+  }
+
+  100% {
+    transform: translateY(100%) translateX(0);
+  }
 }
 
 /* ==========================================================================================================
