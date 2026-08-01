@@ -1,7 +1,9 @@
 
+import PrerequisiteList from "./ListarPrerrequisitos";
+
 // Recibe una materia y las acciones (editar/eliminar) por props,
 // usando destructuring directo en los parámetros
-function CourseCard({ course, onEdit, onDelete }) {
+function CourseCard({ course, onEdit, onDelete, prerequisiteNames }) {
     // También puedes destructurar el objeto "course" aquí adentro
     // para no repetir "course." en cada línea
     const { id, name, day, start_time, end_time, modality, difficulty, credits } = course;
@@ -28,6 +30,10 @@ function CourseCard({ course, onEdit, onDelete }) {
                 <span className={`badge ${modalityClass}`}>{modality}</span>
                 <span className={`badge ${difficultyClass}`}>{difficulty}</span>
                 <span className="badge">{credits} CREDITOS</span>
+            </div>
+            <div className="course-card-prereqs">
+                <span className="field-label">Prerrequisitos</span>
+                <PrerequisiteList names={prerequisiteNames} />
             </div>
 
             <div className="course-card-actions">

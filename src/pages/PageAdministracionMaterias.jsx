@@ -34,7 +34,10 @@ export default function CoursesAdminPage() {
 
     const [selectedCourseId, setSelectedCourseId] = useState("");
     const [selectedPrerequisiteId, setSelectedPrerequisiteId] = useState("");
+    // Lista COMPLETA de todos los prerrequisitos al seleccionar una materia y es anivel de panel 
     const [prerequisites, setPrerequisites] = useState([]);
+    // Lista COMPLETA de todos los prerrequisitos — para las tarjetas del grid
+    const [allPrerequisites, setAllPrerequisites] = useState([]);
 
     // PARA MODIFICAR UNA MATERIA
     const handleEdit = (course) => {
@@ -111,6 +114,7 @@ export default function CoursesAdminPage() {
     // EJECUTA AL RENDERIZAR PANTALLA CARGANDO LOS CURSOS
     useEffect(() => {
         loadCourses();
+        loadAllPrerequisites();
     }, []);
 
     //ELIMINA UNA MATERIA
@@ -152,6 +156,7 @@ export default function CoursesAdminPage() {
             if (!res.ok) throw new Error("Error al cargar prerrequisitos");
             const data = await res.json();
             setPrerequisites(data);
+            loadAllPrerequisites();
         } catch (err) {
             setError(err.message);
         }
@@ -192,6 +197,7 @@ export default function CoursesAdminPage() {
             showToast(setToast, "Prerrequisito asignado correctamente", "success");
             setSelectedPrerequisiteId("");
             loadPrerequisites(selectedCourseId);
+            loadAllPrerequisites();
         } catch (err) {
             showToast(setToast, err.message, "error");
         }
@@ -215,9 +221,33 @@ export default function CoursesAdminPage() {
 
             showToast(setToast, "Prerrequisito eliminado", "success");
             loadPrerequisites(selectedCourseId);
+            loadAllPrerequisites();
         } catch (err) {
             showToast(setToast, err.message, "error");
         }
+    };
+
+    //CARGA TODOS LOS PRERREQUISITOS (de todas las materias, para las tarjetas)
+    const loadAllPrerequisites = async () => {
+        try {
+            const res = await fetch(`${API_URL}/prerequisites`,{
+                method: "GET"
+            });
+            if (!res.ok) throw new Error("Error al cargar prerrequisitos");
+            const data = await res.json();
+            setAllPrerequisites(data);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    // PARA FILTRAR POR ID LOS CURSOS QUE YA SE CARGARON EN COURSES 
+    const courseName = (id) => courses.find((c) => c.id === id)?.name ?? `#${id}`;
+    // RECUPERAR LOS PRERREQUISITOS POR CURSO 
+    const getPrerequisitesForCourse = (courseId) => {
+        return allPrerequisites
+            .filter((p) => p.course_id === courseId)
+            .map((p) => courseName(p.prerequisite_course_id));
     };
 
 
@@ -336,8 +366,8 @@ export default function CoursesAdminPage() {
                     </div>
                 </section>
 
-                
-                
+
+
 
 
                 {/* SECCIÓN: ASIGNAR PRERREQUISITOS ====================================================================================*/}
@@ -448,6 +478,7 @@ export default function CoursesAdminPage() {
                                         course={course}
                                         onEdit={handleEdit}
                                         onDelete={handleDelete}
+                                        prerequisiteNames={getPrerequisitesForCourse(course.id)}
                                     />
                                 ))}
                             </div>

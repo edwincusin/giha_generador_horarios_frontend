@@ -7,8 +7,7 @@ import { NavLink } from "react-router-dom";
 const NAV_LINKS = [
     { to: "/materias", label: "Adm Materias" },
     { to: "/configuracion", label: "Configuración" },
-    { to: "/resultados", label: "Resultados" },
-    { to: "/detalle-horario", label: "Detalle horario" },
+    { to: "/resultados", label: "Resultados" }
 ];
 
 export default function Sidebar() {

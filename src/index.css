@@ -927,3 +927,41 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
 }
+
+
+
+
+
+
+/*PARA LOS PRERREQUISTES EN EL CARD */
+
+.course-card-prereqs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.prereq-tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.prereq-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  padding: 2px 8px;
+}
+
+.prereq-empty {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--steel-400);
+  margin: 0;
+}
